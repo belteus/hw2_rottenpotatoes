@@ -8,6 +8,7 @@ class MoviesController < ApplicationController
 
   def index
     #@movies = Movie.all
+    @all_ratings = Movie.all_ratings
     sort_by = params[:sort]
     if(sort_by == "title")
     	@movies = Movie.order("title ASC")
