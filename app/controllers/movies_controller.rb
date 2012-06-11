@@ -9,16 +9,22 @@ class MoviesController < ApplicationController
   def index
     #@movies = Movie.all
     @all_ratings = Movie.all_ratings 
+    redirect = 0
     if(params[:ratings]!=nil)
     	@selected_ratings = params[:ratings]
-    else
-    	@selected_ratings = session[:current_ratings]
+    elsif(session.has_key?(:current_ratings))
+    	params[:ratings] = session[:current_ratings]
+    	redirect = 1
     end
     if(params[:sort]!=nil)
     	@sort_by = params[:sort]
-    else
-      @sort_by = session[:current_sort]
+    elsif(session.has_key?(:current_sort))
+      params[:sort] = session[:current_sort]
+      redirect = 1
     end  
+    if(redirect ==1)
+    	redirect_to movies_path(:sort=>params[:sort], :ratings =>params[:ratings] )
+    end
     if(@sort_by == "title")
      	if(@selected_ratings == nil)
     		@movies = Movie.order("title ASC")
@@ -47,7 +53,6 @@ class MoviesController < ApplicationController
     
     session[:current_sort] = @sort_by
     session[:current_ratings] = @selected_ratings
-    redirect_to movies_path
   end
 
   def new
