@@ -47,7 +47,7 @@ class MoviesController < ApplicationController
     
     session[:current_sort] = @sort_by
     session[:current_ratings] = @selected_ratings
-    
+    redirect_to movies_path
   end
 
   def new
