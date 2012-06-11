@@ -11,10 +11,16 @@ class MoviesController < ApplicationController
     sort_by = params[:sort]
     if(sort_by == "title")
     	@movies = Movie.order("title ASC")
+    	@sort_title = "hilite"
+    	@sort_release_date = ""
     elsif(sort_by == "release_date")
     	@movies  = Movie.order("release_date ASC")
+    	@sort_title = ""
+    	@sort_release_date = "hilite"
     else
     	@movies = Movie.all
+    	@sort_title = ""
+    	@sort_release_date = ""
     end
   end
 
